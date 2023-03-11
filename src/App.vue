@@ -1,22 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-for="char of characters" :key="char.id">
+      <CharCard :char="char" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CharCard from "./components/CharCard.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      characters: [],
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    CharCard,
+  },
+  mounted() {
+    this.getCharacters();
+  },
+  methods: {
+    getCharacters() {
+      fetch("https://rickandmortyapi.com/api/character")
+        .then((res) => res.json())
+        .then((data) => (this.characters = data.results))
+        .catch((err) => console.log(err));
+    },
+  },
+};
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap");
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,5 +42,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  font-family: "Roboto Condensed", sans-serif;
 }
 </style>
