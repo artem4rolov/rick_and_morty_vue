@@ -6,8 +6,8 @@
         <div class="gender">{{ char.gender }}</div>
       </div>
       <div class="header__right">
+        <div class="status" :class="aliveClass">{{ char.status }}</div>
         <div class="origin">{{ char.origin.name }}</div>
-        <div class="status">{{ char.status }}</div>
       </div>
     </div>
     <img :src="char.image" alt="character image" class="card__avatar" />
@@ -18,6 +18,16 @@
 export default {
   name: "CharCard",
   props: ["char"],
+  data() {
+    return {
+      aliveClass:
+        this.char.status === "Alive"
+          ? "alive"
+          : this.char.status === "Dead"
+          ? "dead"
+          : "",
+    };
+  },
   mounted() {
     this.getChar();
   },
@@ -53,5 +63,35 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: end;
+}
+
+.name {
+  color: #333333;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
+.gender,
+.origin {
+  color: #8d8d8d;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+.status {
+  color: #8d8d8d;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
+.alive {
+  color: #00bd4c;
+}
+
+.dead {
+  color: #e60000;
 }
 </style>
