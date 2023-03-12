@@ -28,16 +28,6 @@ export default {
           : "",
     };
   },
-  mounted() {
-    this.getChar();
-  },
-  methods: {
-    getChar() {
-      if (this.char) {
-        console.log(this.char);
-      }
-    },
-  },
 };
 </script>
 
