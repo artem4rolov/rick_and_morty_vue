@@ -3,7 +3,9 @@
     <div v-for="char of characters" :key="char.id">
       <CharCard v-if="characters" :char="char" />
     </div>
+    <LoadingSpinner v-if="loading" alt="" />
     <PaginationMenu
+      v-if="!loading"
       v-bind:pagination="pagination"
       v-bind:getCharacters="getCharacters"
     />
@@ -13,6 +15,7 @@
 <script>
 import CharCard from "./components/CharCard.vue";
 import PaginationMenu from "./components/PaginationMenu.vue";
+import LoadingSpinner from "./components/LoadingSpinner.vue";
 
 export default {
   name: "App",
@@ -26,13 +29,14 @@ export default {
   components: {
     CharCard,
     PaginationMenu,
+    LoadingSpinner,
   },
   mounted() {
     this.getCharacters();
   },
   methods: {
     async getCharacters(page_url) {
-      page_url = page_url || "https://rickandmortyapi.com/api/character?page=2";
+      page_url = page_url || "https://rickandmortyapi.com/api/character";
 
       await fetch(page_url)
         .then((res) => res.json())
@@ -81,11 +85,16 @@ export default {
   gap: 30px;
 }
 
+.lds-spinner {
+  margin: 0 auto;
+  top: 170px;
+}
+
 .pagination__wrapper {
   position: fixed;
   width: 100vw;
   height: 60px;
-  bottom: -5px;
+  bottom: -10px;
   left: 0;
   background: #000000;
   opacity: 0.9;
